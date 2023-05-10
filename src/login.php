@@ -63,7 +63,7 @@ include_once '../server/Conn.php';
                                 </div>
 
                                 <div class="signup-link">
-                                    <a href="cadastrar.php">Cadastrar</a> - <a href="#">Esqueceu a senha</a><br>
+                                    <a href="index.php">Cadastrar</a> - <a href="#">Esqueceu a senha</a><br>
                                     <?php if (isset($_SESSION['msg'])) {
                                         echo $_SESSION['msg'];
                                         unset($_SESSION['msg']);

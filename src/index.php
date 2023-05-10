@@ -3,8 +3,6 @@ session_start();
 ob_start();
 
 require '../server/Conn.php';
-require '../server/Crud.php';
-
 
 //Recebe o Array do form
 $formData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
@@ -56,8 +54,6 @@ if (!empty($formData['email'])) {
         } // Não existe nenhum registro com o email ou cpf informado, então pode fazer o cadastro
         // ...
     }
-} else {
-    echo "<script>alert('Formulario invalido.');</script>";
 }
 ?>
 
