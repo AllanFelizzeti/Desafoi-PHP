@@ -15,19 +15,19 @@ include_once '../server/Conn.php';
     <link rel="shortcut icon" href="image/favicon2.ico">
     <link rel="stylesheet" href="../css/custom-login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <title>BRA parking - Login</title>
+    <title>Amais Educação- Login</title>
 </head>
 
 <body>
     <nav class="navbar">
         <div class="max-width">
             <div class="logo">
-                <a href="index.php"><img src="image/vagou.png" alt="vagou-logo"></a>
+                <a href="index.php"><img src="" alt=""></a>
             </div>
             <ul class="menu" id="menu-site">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="sobre-empresa.php">Sobre Empresa</a></li>
-                <li><a href="contato.php">Contato</a></li>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Sobre Empresa</a></li>
+                <li><a href="#">Contato</a></li>
                 <li><a href="login.php">Login|Cadastro</a></li>
             </ul>
             <div class="menu-btn" id="menu-btn">
@@ -44,8 +44,8 @@ include_once '../server/Conn.php';
                         <div class="wrapper-login">
                             <div class="title">
                                 <div class="logo1">
-                                    <img src="image/Logo carro.png" alt="BRA parking" width="30px">
-                                    <span>BRA parking</span>
+                                    <!-- <img src="image/Logo carro.png" alt="BRA parking" width="30px"> -->
+                                    <span>Amais Educação</span>
                                 </div>
                             </div>
                             <form action="./validaLogin.php" method="POST" class="form-login">
@@ -77,9 +77,9 @@ include_once '../server/Conn.php';
         </div>
     </section>
     <footer>
-        <span>Created By <a href="https://www.google.com.br/maps/place/Blumenau,+SC/@-26.8560346,-49.2391869,11z/data=!3m1!4b1!4m5!3m4!1s0x94df1e408b5c3095:0xacfb8520bc1a7644!8m2!3d-26.9165792!4d-49.0717331">BRA parking</a></span>
+        <span>Created By <a href="https://www.amaiseducacao.com.br/">amais educação</a></span>
     </footer>
-    <script src="js/custom.js"></script>
+    <script src="../js/custom.js"></script>
 </body>
 
 </html>

@@ -5,13 +5,11 @@ $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
 
 if (!empty($id)) {
 
-    $query_usuario = "SELECT usr.id, usr.nome, usr.cpf, usr.celular, usr.email, usr.brapa, usr.plano_id, usr.niveis_acesso_id,                        
-    edrc.id_end, edrc.cep, edrc.rua, edrc.numero, edrc.complemento, edrc.bairro, edrc.cidade, edrc.usuario_id,                       
-    vcl.id_vei, vcl.modelo, vcl.marca, vcl.placa, vcl.usuario_id    
-    FROM usuarios AS usr    
-    INNER JOIN enderecos AS edrc ON edrc.usuario_id=usr.id    
-    INNER JOIN veiculos AS vcl ON vcl.usuario_id=usr.id    
-    WHERE usr.id = :id LIMIT 1";
+    $query_usuario = "SELECT cur.id, cur.nome, cur.cpf, cur.celular, cur.email, cur.brapa, cur.pretencao_salario,
+    cur.sexo, cur.data_nascimento, cur.estado_civil, cur.escolaridade, cur.empresa, cur.cargo, cur.curso, 
+    cur.periodo_entrada, cur.periodo_saida  
+    FROM curriculos AS cur  
+    WHERE cur.id = :id LIMIT 1";
     $result_usuario = $conn->prepare($query_usuario);
     $result_usuario->bindParam(':id', $id);
     $result_usuario->execute();

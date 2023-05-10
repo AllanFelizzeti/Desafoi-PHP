@@ -5,44 +5,59 @@ ob_start();
 require '../server/Conn.php';
 require '../server/Crud.php';
 
+
 //Recebe o Array do form
 $formData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 //echo "<pre>"; print_r($formData); die;
 //Verifica se não está vazio 
 if (!empty($formData['email'])) {
-    //var_dump($formData);
-    //Cria o objeto para fazer o cadastro no banco
-    $query_cadastrar = "INSERT INTO curriculos (nome, celular, cpf, email, brapa, 
-    pretencao_salario, sexo, data_nascimento, estado_civil, escolaridade, empresa, cargo, curso, periodo_entrada, periodo_saida, created) 
-                        VALUES (:nome, :celular, :cpf, :email, :brapa, 
-    :pretencao_salario, :sexo, :data_nascimento, :estado_civil, :escolaridade, :empresa, :cargo, :curso, :periodo_entrada, :periodo_saida, NOW())";
-    $add_cadastro = $conn->prepare($query_cadastrar);
-    $add_cadastro->bindParam(':nome', $formData['nome']);
-    $add_cadastro->bindParam(':celular', $formData['celular']);
-    $add_cadastro->bindParam(':cpf', $formData['cpf']);
-    $add_cadastro->bindParam(':email', $formData['email']);
-    $add_cadastro->bindParam(':brapa', $formData['brapa']);
-    $add_cadastro->bindParam(':pretencao_salario', $formData['pretencao_salario']);
-    $add_cadastro->bindParam(':sexo', $formData['sexo']);
-    $add_cadastro->bindParam(':data_nascimento', $formData['data_nascimento']);
-    $add_cadastro->bindParam(':estado_civil', $formData['estado_civil']);
-    $add_cadastro->bindParam(':escolaridade', $formData['escolaridade']);
-    $add_cadastro->bindParam(':empresa', $formData['empresa']);
-    $add_cadastro->bindParam(':cargo', $formData['cargo']);
-    $add_cadastro->bindParam(':curso', $formData['curso']);
-    $add_cadastro->bindParam(':periodo_entrada', $formData['periodo_entrada']);
-    $add_cadastro->bindParam(':periodo_saida', $formData['periodo_saida']);
+    $check_query = "SELECT * FROM curriculos WHERE email = :email OR cpf = :cpf LIMIT 1";
+    $check_stmt = $conn->prepare($check_query);
+    $check_stmt->bindParam(':email', $formData['email']);
+    $check_stmt->bindParam(':cpf', $formData['cpf']);
+    $check_stmt->execute();
 
-    $add_cadastro->execute();
-
-    if ($add_cadastro->rowCount()) {
-        //Mostra a mensagem se cadastrado com sucesso redireciona para a pagina index.php
-        $_SESSION['msg'] = "<p style='color: green;'>Usuário cadastrado com sucesso!</p>";
-        header("Location: login.php");
+    if ($check_stmt->rowCount() > 0) {
+        // Já existe um registro com o email ou cpf informado
+        echo "<script>alert('Já existe um registro com o email ou cpf informado.');</script>";
     } else {
-        $_SESSION['msg'] = "<p style='color: #f00;'>Usuário não cadastrado com sucesso!</p>";
-        header("Location: index.php");
+        //var_dump($formData);
+        //Cria o objeto para fazer o cadastro no banco
+        $query_cadastrar = "INSERT INTO curriculos (nome, celular, cpf, email, brapa, 
+        pretencao_salario, sexo, data_nascimento, estado_civil, escolaridade, empresa, cargo, curso, periodo_entrada, periodo_saida, created) 
+                            VALUES (:nome, :celular, :cpf, :email, :brapa, 
+        :pretencao_salario, :sexo, :data_nascimento, :estado_civil, :escolaridade, :empresa, :cargo, :curso, :periodo_entrada, :periodo_saida, NOW())";
+        $add_cadastro = $conn->prepare($query_cadastrar);
+        $add_cadastro->bindParam(':nome', $formData['nome']);
+        $add_cadastro->bindParam(':celular', $formData['celular']);
+        $add_cadastro->bindParam(':cpf', $formData['cpf']);
+        $add_cadastro->bindParam(':email', $formData['email']);
+        $add_cadastro->bindParam(':brapa', $formData['brapa']);
+        $add_cadastro->bindParam(':pretencao_salario', $formData['pretencao_salario']);
+        $add_cadastro->bindParam(':sexo', $formData['sexo']);
+        $add_cadastro->bindParam(':data_nascimento', $formData['data_nascimento']);
+        $add_cadastro->bindParam(':estado_civil', $formData['estado_civil']);
+        $add_cadastro->bindParam(':escolaridade', $formData['escolaridade']);
+        $add_cadastro->bindParam(':empresa', $formData['empresa']);
+        $add_cadastro->bindParam(':cargo', $formData['cargo']);
+        $add_cadastro->bindParam(':curso', $formData['curso']);
+        $add_cadastro->bindParam(':periodo_entrada', $formData['periodo_entrada']);
+        $add_cadastro->bindParam(':periodo_saida', $formData['periodo_saida']);
+
+        $add_cadastro->execute();
+
+        if ($add_cadastro->rowCount()) {
+            //Mostra a mensagem se cadastrado com sucesso redireciona para a pagina index.php
+            $_SESSION['msg'] = "<p style='color: green;'>Usuário cadastrado com sucesso!</p>";
+            header("Location: login.php");
+        } else {
+            $_SESSION['msg'] = "<p style='color: #f00;'>Usuário não cadastrado com sucesso!</p>";
+            header("Location: index.php");
+        } // Não existe nenhum registro com o email ou cpf informado, então pode fazer o cadastro
+        // ...
     }
+} else {
+    echo "<script>alert('Formulario invalido.');</script>";
 }
 ?>
 
@@ -229,8 +244,6 @@ if (!empty($formData['email'])) {
             <div hidden>
                 <input type="number" name="nivel-acesso" value="4">
             </div>
-
-
 
             <div class="col-12">
                 <div class="form-check">
